@@ -1,3 +1,8 @@
+# Features
+* Infinity Mana And Health.
+* Fast Mine.
+* Add Buffs.
+* Add Items.
 # Code
 * [Categories](https://github.com/Zodys/Terraria-ImGUI/blob/master/app/src/main/cpp/src/Categories.h) - menu tabs
 * [Hooks](https://github.com/Zodys/Terraria-ImGUI/blob/master/app/src/main/cpp/src/Hooks.cpp) - example of hook functions with il2cpp resolver
