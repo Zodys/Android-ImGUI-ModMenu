@@ -1,7 +1,7 @@
 # Code
-* [Categories](Categories.h) - menu tabs
-* [Hooks](Hooks.cpp) - example of hook functions with il2cpp resolver
-* [Menu](Menu.cpp) - setup menu
+* [Categories](https://github.com/Zodys/Terraria-ImGUI/blob/master/app/src/main/cpp/src/Categories.h) - menu tabs
+* [Hooks](https://github.com/Zodys/Terraria-ImGUI/blob/master/app/src/main/cpp/src/Hooks.cpp) - example of hook functions with il2cpp resolver
+* [Menu](https://github.com/Zodys/Terraria-ImGUI/blob/master/app/src/main/cpp/src/Menu.cpp) - setup menu
 # How to add in unity game
 * Add this to OnCreate in UnityPlayerActivity.smali:
 ```
