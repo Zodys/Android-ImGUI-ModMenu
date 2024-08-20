@@ -7,6 +7,11 @@ using namespace std;
 
 struct Settings {
     struct {
+        int screenHeight;
+        int screenWidth;
+        ImDrawList* drawList;
+    } global;
+    struct {
         bool fly;
         bool more_mana_health;
         bool light;
@@ -23,7 +28,6 @@ struct Settings {
             bool add;
             std::vector<std::string> names;
         } items;
-
     } player;
 };
 extern Settings vars;

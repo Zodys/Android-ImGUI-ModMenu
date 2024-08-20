@@ -1,6 +1,5 @@
 #pragma once
-namespace game {
-    namespace hook {
-        void init();
-    } // namespace hook
-} // namespace game
+#include "memory/Il2cppResolver/IL2CPP_Resolver.hpp"
+namespace hooks{
+    Unity::System_String *(*Lang$GetBuffName)(int);
+}

@@ -11,19 +11,27 @@
 #include "Menu.h"
 #include "stuff/logger.h"
 #include "stuff/Config.h"
+#include "modules/Buffs.h"
+#include "modules/Player.h"
+#include "modules/Items.h"
 using namespace std;
 using namespace KittyMemory;
+
+Menu::Menu() {
+    Gui.AddModule(new Player());
+    Gui.AddModule(new Buffs());
+    Gui.AddModule(new Items());
+}
 
 ElfScanner g_il2cppBaseMap;
 
 bool isFirstStart = false;
-Unity::System_String *(*GetBuffName)(int);
 
 Unity::System_String *(*old_GetItemNameValue)(int);
 Unity::System_String  *_GetItemNameValue(int id) {
     if (!isFirstStart) {
         for(int i = 1; i <= 328 ; i++) {
-            std::string name = GetBuffName(i)->ToString() + " - " + to_string(i);
+            std::string name = hooks::Lang$GetBuffName(i)->ToString() + " - " + to_string(i);
             vars.player.buffs.names.push_back(name);
         }
         for(int i = 1; i <= 5124 ; i++) {
@@ -90,15 +98,13 @@ void main_thread(){
     void* Player_Update_NPCCollision = IL2CPP::Class::Utils::GetMethodPointer("Terraria.Player","Update_NPCCollision");
     void* Lang_GetItemNameValue = IL2CPP::Class::Utils::GetMethodPointer("Terraria.Lang","GetItemNameValue");
 
-    GetBuffName = (Unity::System_String*(*) (int)) IL2CPP::Class::Utils::GetMethodPointer("Terraria.Lang", "GetBuffName");
+    hooks::Lang$GetBuffName = (Unity::System_String*(*) (int)) IL2CPP::Class::Utils::GetMethodPointer("Terraria.Lang", "GetBuffName");
     DobbyHook((void*)Player_Update_NPCCollision,(void*)&_Player_Update,(void**)&old_Player_Update);
     DobbyHook((void*)Lang_GetItemNameValue,(void*)&_GetItemNameValue,(void**)&old_GetItemNameValue);
 }
 
-namespace game {
-    namespace hook {
-        void init() {
-            thread(main_thread).detach();
-        }
-    }
+__unused __attribute__((constructor))
+void constructor_main() {
+    LOGI("Starting ModMenu...");
+    thread(main_thread).detach();
 }

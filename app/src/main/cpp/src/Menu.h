@@ -1,20 +1,24 @@
-namespace Renderer{
-    struct ScreenSize{
-        int width;
-        int height;
-    };
+#pragma once
+#include <vector>
+#include "Module.h"
+using namespace std;
+class Menu{
+public:
+    Menu();
+    ~Menu(){};
 
-
-    extern void SetupRender();
-    extern void Render();
-    extern void Resize(int width, int height);
-
-    extern bool _initialized;
-
+    void Draw();
+    void SetupRender();
+    void Render();
+    void Resize(int screenWidth, int screenHeight);
+    void AddModule(Module* module);
+    bool initialized;
+private:
     void setUpKeyboard();
-
     void diasableKeys();
+    void scroll();
+    bool isAnyScrollBarActive();
+    std::vector<Module*> m_modules;
 
-    void Menu();
-}
-
+};
+extern Menu Gui;

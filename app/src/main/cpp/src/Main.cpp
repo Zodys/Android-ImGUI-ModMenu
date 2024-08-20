@@ -1,3 +1,8 @@
+//
+// Created by 1 on 04.08.2024.
+//
+
+
 #include <jni.h>
 #include <imgui.h>
 #include <android/input.h>
@@ -7,11 +12,10 @@
 #include "imgui_impl_android.h"
 #include "stuff/logger.h"
 #include "Menu.h"
-#include "Hooks.h"
 
 extern "C" {
 JNIEXPORT void JNICALL
-Java_com_zodys_gui_Surface_DrawFrame(JNIEnv *env, jobject thiz) {
+Java_com_rhteam_gui_Surface_DrawFrame(JNIEnv *env, jobject thiz) {
     ImGuiIO &io = ImGui::GetIO();
     static bool WantTextInputLast = false;
     if (io.WantTextInput && !WantTextInputLast)
@@ -19,11 +23,11 @@ Java_com_zodys_gui_Surface_DrawFrame(JNIEnv *env, jobject thiz) {
     if (io.KeysDown[io.KeyMap[ImGuiKey_Enter]])
         Java::show_soft_input(false);
     WantTextInputLast = io.WantTextInput;
-    Renderer::Render();
+    Gui.Render();
 }
 JNIEXPORT void JNICALL
-Java_com_zodys_gui_Surface_ShutDown(JNIEnv *env, jobject thiz) {
-    if (!Renderer::_initialized)
+Java_com_rhteam_gui_Surface_ShutDown(JNIEnv *env, jobject thiz) {
+    if (!Gui.initialized)
     {
         return;
     }
@@ -31,16 +35,16 @@ Java_com_zodys_gui_Surface_ShutDown(JNIEnv *env, jobject thiz) {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplAndroid_Shutdown();
     ImGui::DestroyContext();
-    Renderer::_initialized=false;
+    Gui.initialized=false;
 }
 
 JNIEXPORT void JNICALL
-Java_com_zodys_gui_Surface_SurfaceCreated(JNIEnv *env, jobject thiz) {
-    Renderer::SetupRender();
+Java_com_rhteam_gui_Surface_SurfaceCreated(JNIEnv *env, jobject thiz) {
+    Gui.SetupRender();
 }
 JNIEXPORT void JNICALL
-Java_com_zodys_gui_Surface_SurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
-    Renderer::Resize(width,height);
+Java_com_rhteam_gui_Surface_SurfaceChanged(JNIEnv *env, jobject thiz, jint width, jint height) {
+    Gui.Resize(width,height);
 }
 JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM *vm, void *reserved) {
@@ -49,13 +53,7 @@ JNI_OnLoad(JavaVM *vm, void *reserved) {
 }
 }
 
-__unused __attribute__((constructor))
-void constructor_main() {
-    LOGI("Starting ModMenu...");
 
-    game::hook::init();
-    //game::hook::touch();
-}
 
 jmethodID MotionEvent_getX, MotionEvent_getY, MotionEvent_getAction, MotionEvent_getToolType, MotionEvent_getButtonState, MotionEvent_getAxisValue;
 jmethodID KeyEvent_getUnicodeChar, KeyEvent_getMetaState, KeyEvent_getAction, KeyEvent_getKeyCode, KeyEvent_getScanCode;
