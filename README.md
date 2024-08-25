@@ -21,4 +21,3 @@ invoke-static {p0}, Lcom/zodys/gui/Surface;->Start(Landroid/content/Context;)V
 * [KittyMemory](https://github.com/MJx0/KittyMemory) by MJx0
 * [IL2CPP_Resolver](https://github.com/sneakyevil/IL2CPP_Resolver) by sneakyevil
 * [IL2CPP_Resolver_Easy_Template](https://github.com/Piotrixek/IL2CPP_Resolver_Easy_Template) by Piotrixek
-* [Better Enums](https://github.com/aantron/better-enums) by aantron
